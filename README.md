@@ -60,6 +60,7 @@ python boiler_sim.py
 ---
 
 ## 6. Roadmap
+
 - [x] **Phase 1**: Physics engine with time delay and inertia.
 - [ ] **Phase 2**: Closed-loop control with PID.
 - [ ] **Phase 3**: Cascade Control and Feed-forward logic.
