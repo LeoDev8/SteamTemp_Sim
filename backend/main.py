@@ -14,7 +14,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-from physicsModels.boiler_sim import SteamSystem
+from models.boiler_model import SteamSystem
 from algorithms.pid_controller import PIDController
 
 app = FastAPI(title="SteamTemp-Optima API")
