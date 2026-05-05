@@ -39,9 +39,9 @@ boiler = SteamSystem(
 )
 
 controller = PIDController(
-    kp=4.5, 
-    ki=0.08, 
-    kd=1.5, 
+    kp=6, 
+    ki=0.05, 
+    kd=10, 
     setpoint=540.0, 
     direction=PIDController.REVERSE
 )

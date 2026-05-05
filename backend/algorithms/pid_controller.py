@@ -20,7 +20,7 @@ class PIDController:
         self.integral = 0
         
         # Anti-Windup: Prevents integral saturation
-        self.integral_limit = 50.0 
+        self.integral_limit = 100 / self.ki
         
         # Output Clamping: Ensures PID stays within physical limits
         self.output_min = 0.0
