@@ -56,6 +56,71 @@ class PIDController:
         
         self.prev_error = error
         return final_output
+    
+    def get_params(self) -> list:
+        """
+        Exports the PID controller's gains and configuration as a metadata schema.
+        This allows the frontend to dynamically generate tuning sliders and selectors.
+        """
+        return [
+            {
+                "id": "kp",
+                "label": "Proportional Gain (Kp)",
+                "type": "slider",
+                "value": self.kp,
+                "min": 0.0,
+                "max": 20.0,
+                "step": 0.1,
+                "unit": "",
+                "description": "Defines the immediate reaction to the current error."
+            },
+            {
+                "id": "ki",
+                "label": "Integral Gain (Ki)",
+                "type": "slider",
+                "value": self.ki,
+                "min": 0.0,
+                "max": 1.0,
+                "step": 0.01,
+                "unit": "",
+                "description": "Eliminates long-term steady-state error."
+            },
+            {
+                "id": "kd",
+                "label": "Derivative Gain (Kd)",
+                "type": "slider",
+                "value": self.kd,
+                "min": 0.0,
+                "max": 10.0,
+                "step": 0.1,
+                "unit": "",
+                "description": "Provides damping to reduce overshoot and oscillation."
+            },
+            {
+                "id": "setpoint",
+                "label": "Target Setpoint",
+                "type": "number",
+                "value": self.setpoint,
+                "min": 400.0,
+                "max": 700.0,
+                "step": 0.5,
+                "unit": "°C",
+                "description": "The desired target value the controller aims to reach."
+            },
+            {
+                "id": "direction",
+                "label": "Control Action",
+                "type": "select",
+                "value": self.direction,
+                "options": [
+                    {"label": "Direct (Heating)", "value": 1},
+                    {"label": "Reverse (Cooling)", "value": -1}
+                ],
+                "description": "Determines if output increases or decreases with error."
+            }
+        ]
+    
+    
 
 # --- Comprehensive Unit Test Suite ---
 if __name__ == "__main__":

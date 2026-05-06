@@ -33,3 +33,20 @@ async def change_model(model_id: str):
 async def update_sp(data: SetpointUpdate):
     sim_service.controller.setpoint = data.value
     return {"status": "target updated"}
+
+@router.get("/config-schema")
+async def get_config_schema():
+    """Fetch the dynamic UI configuration schema."""
+    return sim_service.get_full_schema()
+
+@router.patch("/update-parameter")
+async def update_parameter(target: str, param_id: str, value: float):
+    """
+    通用参数更新接口
+    target: "model" 或 "algo"
+    """
+    if target == "model":
+        setattr(sim_service.active_model, param_id, value)
+    else:
+        setattr(sim_service.controller, param_id, value)
+    return {"status": "success"}

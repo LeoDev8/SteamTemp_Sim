@@ -14,3 +14,11 @@ class BasePhysicalModel(ABC):
     def reset(self):
         """Reset the model to its initial state."""
         pass
+    
+    @abstractmethod
+    def get_params(self) -> List[Dict[str, Any]]:
+        """
+        Returns a list of parameter definitions for UI rendering.
+        Each dict should contain: id, label, type, value, min, max, step, unit.
+        """
+        pass

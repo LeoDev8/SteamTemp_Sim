@@ -42,6 +42,14 @@ class SimulationManager:
             "mv": round(mv, 2),
             "sp": self.controller.setpoint
         }
+    
+    def get_full_schema(self):
+        """Combines model and controller parameters for the UI."""
+        return {
+            "model_params": self.active_model.get_params(),
+            "controller_params": self.controller.get_params(),
+            "active_model": self.active_id
+        }
 
 # Singleton instance to be shared across routes
 sim_service = SimulationManager()

@@ -85,3 +85,57 @@ class BoilerModel(BasePhysicalModel):
             "input_unit": "%",
             "description": "FOPDT model of a thermal power plant superheater section."
         }
+        
+    def get_params(self) -> list:
+        """
+        Exports the configurable physical parameters of the boiler model
+        as a schema for dynamic UI generation in ControlSim Studio.
+        
+        Each parameter defines its UI component type, constraints, and current state.
+        """
+        return [
+            {
+                "id": "inertia_constant",
+                "label": "Thermal Inertia",
+                "type": "slider",
+                "value": self.inertia,
+                "min": 0.85,
+                "max": 0.99,
+                "step": 0.01,
+                "unit": "",
+                "description": "Represents the damping effect of the boiler metal mass."
+            },
+            {
+                "id": "dead_time_steps",
+                "label": "Transport Delay",
+                "type": "number",
+                "value": self.dead_time,
+                "min": 0,
+                "max": 100,
+                "step": 1,
+                "unit": "s",
+                "description": "Physical time for desuperheating water to reach the sensor."
+            },
+            {
+                "id": "cooling_efficiency",
+                "label": "Cooling Gain",
+                "type": "slider",
+                "value": self.gain,
+                "min": 0.1,
+                "max": 3.0,
+                "step": 0.1,
+                "unit": "ΔT/%",
+                "description": "Temperature drop intensity per 1% valve opening."
+            },
+            {
+                "id": "furnace_heat_baseline",
+                "label": "Furnace Baseline",
+                "type": "number",
+                "value": self.base_heat,
+                "min": 400.0,
+                "max": 900.0,
+                "step": 0.5,
+                "unit": "°C",
+                "description": "Potential steady-state temperature without cooling."
+            }
+        ]
