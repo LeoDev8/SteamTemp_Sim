@@ -22,12 +22,20 @@ async def step():
     """Trigger one calculation cycle."""
     return sim_service.run_step()
 
-@router.post("/switch/{model_id}")
+@router.post("/switch-model/{model_id}")
 async def change_model(model_id: str):
     """Dynamically swap the physical engine."""
     if sim_service.switch_model(model_id):
         return {"status": f"switched to {model_id}"}
     raise HTTPException(status_code=404, detail="Model not found")
+
+@router.post("/switch-controller/{controller_id}")
+async def change_model(controller_id: str):
+    """Dynamically swap the physical engine."""
+    if sim_service.switch_controller(controller_id):
+        print(sim_service.active_controller_id)
+        return {"status": f"switched to {controller_id}"}
+    raise HTTPException(status_code=404, detail="Controller not found")
 
 @router.put("/setpoint")
 async def update_sp(data: SetpointUpdate):

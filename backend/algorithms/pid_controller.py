@@ -57,6 +57,10 @@ class PIDController:
         self.prev_error = error
         return final_output
     
+    def reset(self) -> None:
+        self.direction = self.DIRECT
+        return True
+    
     def get_params(self) -> list:
         """
         Exports the PID controller's gains and configuration as a metadata schema.
@@ -91,7 +95,7 @@ class PIDController:
                 "type": "slider",
                 "value": self.kd,
                 "min": 0.0,
-                "max": 10.0,
+                "max": 20.0,
                 "step": 0.1,
                 "unit": "",
                 "description": "Provides damping to reduce overshoot and oscillation."
@@ -110,11 +114,11 @@ class PIDController:
             {
                 "id": "direction",
                 "label": "Control Action",
-                "type": "select",
+                "type": "switch",
                 "value": self.direction,
                 "options": [
-                    {"label": "Direct (Heating)", "value": 1},
-                    {"label": "Reverse (Cooling)", "value": -1}
+                    {"label": "Direct", "value": 1},
+                    {"label": "Reverse", "value": -1}
                 ],
                 "description": "Determines if output increases or decreases with error."
             }
