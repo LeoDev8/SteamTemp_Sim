@@ -14,7 +14,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-from models.boiler_model import SteamSystem
+from models.boiler_model import BoilerModel
 from algorithms.pid_controller import PIDController
 
 app = FastAPI(title="SteamTemp-Optima API")
@@ -30,8 +30,8 @@ app.add_middleware(
 def get_():
     return {"a": "Hello World!"}
 
-# --- 现在这里的 SteamSystem 和 PIDController 就有定义了 ---
-boiler = SteamSystem(
+# --- 现在这里的 BoilerModel 和 PIDController 就有定义了 ---
+boiler = BoilerModel(
     base_furnace_temp=565.0, 
     thermal_inertia=0.98, 
     delay_seconds=20,
