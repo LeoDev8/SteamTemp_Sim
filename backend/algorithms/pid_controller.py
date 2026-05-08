@@ -58,7 +58,6 @@ class PIDController:
         return final_output
     
     def reset(self) -> None:
-        self.direction = self.DIRECT
         return True
     
     def get_params(self) -> list:
