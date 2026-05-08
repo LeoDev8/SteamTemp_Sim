@@ -2,6 +2,7 @@ import sys
 from pathlib import Path
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from apis.simulation import router as sim_router
 
 # Ensure the backend directory is in the python path for module discovery
 BASE_DIR = Path(__file__).resolve().parent

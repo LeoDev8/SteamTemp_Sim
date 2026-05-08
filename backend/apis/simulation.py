@@ -1,11 +1,41 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, WebSocket, WebSocketDisconnect
 from pydantic import BaseModel
 from services.sim_manager import sim_service
+import asyncio
+import time
 
 router = APIRouter(prefix="/simulation", tags=["Control Panel"])
 
 class SetpointUpdate(BaseModel):
     value: float
+
+@router.websocket("/ws")
+async def websocket_endpoint(websocket: WebSocket):
+    await websocket.accept()
+    print("DEBUG: WebSocket connection established")
+    try:
+        while True:
+            # 1. Execute one step of the current model and controller
+            # Note: 'Simultaneously' means happening at the same time.
+            # The sim_service handles the logic regardless of which model is selected.
+            results = sim_service.run_step()
+            
+            # 2. Prepare the payload with a timestamp
+            # We use %M:%S.%f to show sub-second precision
+            payload = {
+                "pv": results["pv"],
+                "sp": results["sp"],
+                "mv": results["mv"],
+                "time": time.strftime("%H:%M:%S")
+            }
+            
+            # 3. Push to frontend
+            await websocket.send_json(payload)
+            
+            # 4. High-frequency update (0.1s = 10 updates per second)
+            await asyncio.sleep(0.1) 
+    except WebSocketDisconnect:
+        print("DEBUG: Client disconnected")
 
 @router.get("/telemetry")
 async def get_telemetry():

@@ -42,11 +42,13 @@ class SimulationManager:
             return True
         return False
 
-    def run_pid_step(self):
+    def run_step(self):
         """The core control loop execution."""
         pv = self.active_model.current_state
         mv = self.active_controller.compute(pv)
         new_pv = self.active_model.update(control_input=mv)
+        
+        print('new_pv:{}, mv: {}, sp: {}'.format(new_pv, mv, self.active_controller.setpoint))
         return {
             "pv": round(new_pv, 2),
             "mv": round(mv, 2),

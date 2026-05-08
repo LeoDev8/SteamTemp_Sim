@@ -9,7 +9,7 @@ class PIDController:
     DIRECT = 1
     REVERSE = -1
 
-    def __init__(self, kp, ki, kd, setpoint, direction=DIRECT):
+    def __init__(self, kp, ki, kd, setpoint, direction=REVERSE):
         self.kp = kp
         self.ki = ki
         self.kd = kd
@@ -124,6 +124,10 @@ class PIDController:
             }
         ]
     
+
+
+
+
     
 
 # --- Comprehensive Unit Test Suite ---
